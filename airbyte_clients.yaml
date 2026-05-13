@@ -1,0 +1,32 @@
+schedule_groups:
+  every_6_hours:
+    clients:      
+      - Rebound
+
+  daily_10am:
+    clients:      
+      - Ngage
+
+clients:
+  - client_name: Ngage
+    pipeline_id: 50601fff-a48f-46ee-ad5d-8bfd6d7f283b
+    pipeline_api_key_env: PIPELINE_API_KEY
+
+    connectors:
+      - name: Force24
+        connection_id: d5f98d05-2c49-438b-abbc-f65a2f530fdd
+        # pipeline_id: 
+        
+
+      - name: Tifo
+        connection_id: 2be98bd1-7949-45b8-bea6-42462f5c86cf
+        # pipeline_id: 
+
+  - client_name: Rebound
+    # pipeline_id: 89134fa5-f49f-4ee1-b363-0932d48a7406
+    pipeline_api_key_env: PIPELINE_API_KEY
+
+    connectors:
+      - name: Rebound_Google_Geocode
+        connection_id: e331a247-ea85-4dd1-83b7-17704571b5b2
+        pipeline_id: 00558a34-fa26-40a8-90e8-8f289a7a05d0  
