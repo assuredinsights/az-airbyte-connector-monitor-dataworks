@@ -15,6 +15,53 @@ BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_CONFIG_PATH = BASE_DIR / "airbyte_clients.yaml"
 
 
+def get_schedule_client_name(schedule_client):
+    if isinstance(schedule_client, str):
+        return schedule_client
+
+    return schedule_client.get("client_name")
+
+
+def filter_client_connectors_for_schedule(client, schedule_client_config):
+    if isinstance(schedule_client_config, str):
+        return client
+
+    include_connectors = {
+        name.strip().lower()
+        for name in schedule_client_config.get("include_connectors", [])
+    }
+
+    exclude_connectors = {
+        name.strip().lower()
+        for name in schedule_client_config.get("exclude_connectors", [])
+    }
+
+    connectors = client.get("connectors", [])
+
+    if include_connectors:
+        connectors = [
+            connector for connector in connectors
+            if connector["name"].strip().lower() in include_connectors
+        ]
+
+    if exclude_connectors:
+        connectors = [
+            connector for connector in connectors
+            if connector["name"].strip().lower() not in exclude_connectors
+        ]
+
+    if not connectors:
+        raise ValueError(
+            f"No connectors selected for client '{client['client_name']}' "
+            f"in schedule group."
+        )
+
+    filtered_client = dict(client)
+    filtered_client["connectors"] = connectors
+
+    return filtered_client
+
+
 def run_clients_by_schedule_group(schedule_group, config_path=None):
     config = load_config(config_path or DEFAULT_CONFIG_PATH)
 
@@ -22,18 +69,27 @@ def run_clients_by_schedule_group(schedule_group, config_path=None):
     if not group_config:
         raise ValueError(f"No schedule group found: {schedule_group}")
 
-    selected_client_names = {
-        name.strip().lower()
-        for name in group_config.get("clients", [])
+    schedule_clients = group_config.get("clients", [])
+
+    schedule_client_map = {
+        get_schedule_client_name(schedule_client).strip().lower(): schedule_client
+        for schedule_client in schedule_clients
+        if get_schedule_client_name(schedule_client)
     }
 
     clients = [
-        client for client in config["clients"]
-        if client.get("client_name", "").strip().lower() in selected_client_names
+        filter_client_connectors_for_schedule(
+            client=client,
+            schedule_client_config=schedule_client_map[
+                client.get("client_name", "").strip().lower()
+            ],
+        )
+        for client in config["clients"]
+        if client.get("client_name", "").strip().lower() in schedule_client_map
     ]
 
     print("DEBUG schedule_group:", schedule_group)
-    print("DEBUG selected_client_names:", sorted(selected_client_names))
+    print("DEBUG selected_client_names:", sorted(schedule_client_map.keys()))
     print("DEBUG matched_clients:", [client["client_name"] for client in clients])
 
     if not clients:

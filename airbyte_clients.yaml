@@ -1,11 +1,22 @@
 schedule_groups:
-  every_6_hours:
-    clients:      
-      - Rebound
+  # every_6_hours:
+  #   clients:
+      # - client_name: Rebound     
+ 
 
-  daily_10am:
-    clients:      
-      - Ngage
+  daily_8am:
+    clients:
+      - client_name: Ngage
+        exclude_connectors:
+          - Access-Financials-Large
+      - client_name: Rebound
+
+  monday_8am:
+    clients:
+      - client_name: Ngage
+        include_connectors:
+          - Access-Financials-Large
+
 
 clients:
   - client_name: Ngage
@@ -15,12 +26,73 @@ clients:
     connectors:
       - name: Force24
         connection_id: d5f98d05-2c49-438b-abbc-f65a2f530fdd
+        # pipeline_id:   
+
+      - name: Access-Financials
+        connection_id: 76f44c85-bd4a-4825-9482-8c03d01b848e
+        # pipeline_id:     
+
+      - name: Access-Financials-2
+        connection_id: 982e12b5-30e0-412f-ac5b-49c2cce6308c
+        # pipeline_id:
+
+      - name: Access-Financials-Large
+        connection_id: cc60f6f9-0ef3-45cc-9a23-733488c4d6a2
+        # pipeline_id:
+
+      - name: Babble
+        connection_id: 8e260d71-c4c8-400a-a145-b87f538ddc13
         # pipeline_id: 
-        
+
+      - name: Babble
+        connection_id: 8e260d71-c4c8-400a-a145-b87f538ddc13
+        # pipeline_id: 
+
+      - name: Bullhorn
+        connection_id: 743cd00b-67e9-4382-a0f7-cba26e7b8869
+        # pipeline_id:
+
+      - name: Joomla - circleflex
+        connection_id: e04dc50c-abd4-47f3-baa9-b332ccfbbff7
+        # pipeline_id:
+
+      - name: Joomla - rxplusfacilities
+        connection_id: fbd2a838-878c-40e6-a24b-500a27427dc4
+        # pipeline_id:
+
+      - name: Joomla - rxplushealthcare
+        connection_id: 756c393b-b429-4809-826f-32e9b1c922e2
+        # pipeline_id:
+
+      - name: Microsoft Entra
+        connection_id: 92b22f9e-8683-4633-9fd6-6fd11125c2c0
+        # pipeline_id:
+
+      - name: Office365
+        connection_id: 67fe7538-c6b0-49fd-aa3a-bd438d1f3e5f
+        # pipeline_id:
+
+      - name: Tifo- Compliance_cases1 
+        connection_id: af9bdfca-18c0-4788-b822-a6d2dbe1c8fe
+        # pipeline_id:
+
+      - name: Tifo- Compliance_cases2 
+        connection_id: e993e402-7bf7-4560-a790-c956839879e0
+        # pipeline_id:
+
+      - name: Tifo - Contractors 
+        connection_id: b6949675-9e7f-4677-9921-5dbee36fc848
+        # pipeline_id:
 
       - name: Tifo
         connection_id: 2be98bd1-7949-45b8-bea6-42462f5c86cf
-        # pipeline_id: 
+        # pipeline_id:
+
+      - name: Twilio
+        connection_id: a5a13103-ddb6-4725-b62b-1204c329adc6
+        # pipeline_id:
+
+
 
   - client_name: Rebound
     # pipeline_id: 89134fa5-f49f-4ee1-b363-0932d48a7406
