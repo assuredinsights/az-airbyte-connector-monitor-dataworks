@@ -11,6 +11,11 @@ schedule_groups:
           - Access-Financials-Large
       - client_name: Rebound
 
+  daily_9am:
+    clients:
+      - client_name: Meininger
+        
+
   monday_8am:
     clients:
       - client_name: Ngage
@@ -101,4 +106,13 @@ clients:
     connectors:
       - name: Rebound_Google_Geocode
         connection_id: e331a247-ea85-4dd1-83b7-17704571b5b2
-        pipeline_id: 00558a34-fa26-40a8-90e8-8f289a7a05d0  
+        pipeline_id: 00558a34-fa26-40a8-90e8-8f289a7a05d0
+
+  - client_name: Meininger
+    # pipeline_id: 89134fa5-f49f-4ee1-b363-0932d48a7406
+    pipeline_api_key_env: PIPELINE_API_KEY
+
+    connectors:
+      - name: TrustYouAPI - Meininger
+        connection_id: 5d681ac0-5ebb-4288-ae7e-185f9bbbe834
+        pipeline_id: 89dea272-fdb0-4616-ad56-e837b27295c3   
