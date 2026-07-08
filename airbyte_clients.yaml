@@ -14,6 +14,7 @@ schedule_groups:
   daily_9am:
     clients:
       - client_name: Meininger
+      - client_name: Assured
         
 
   monday_8am:
@@ -115,4 +116,13 @@ clients:
     connectors:
       - name: TrustYouAPI - Meininger
         connection_id: 5d681ac0-5ebb-4288-ae7e-185f9bbbe834
-        pipeline_id: 89dea272-fdb0-4616-ad56-e837b27295c3   
+        pipeline_id: 89dea272-fdb0-4616-ad56-e837b27295c3
+
+  - client_name: Assured
+    # pipeline_id: 97421df7-7ce2-4d16-bf69-829a37fff205
+    pipeline_api_key_env: PIPELINE_API_KEY
+
+    connectors:
+      - name: ActiveAudit - Azure Blob Storage Custom
+        connection_id: ef32350a-c3cb-413c-8206-92e79d5c3f9f
+        pipeline_id: 97421df7-7ce2-4d16-bf69-829a37fff205 
